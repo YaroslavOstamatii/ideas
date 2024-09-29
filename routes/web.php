@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', [DashboardController::class,'index'])->name('dashboard');
 Route::post('/idea', [DashboardController::class,'store'])->name('idea.store');
+Route::delete('/idea/{idea}', [DashboardController::class,'delete'])->name('idea.delete');
+
 Route::get('/terms', function (){ return view('terms');})->name('terms');
 

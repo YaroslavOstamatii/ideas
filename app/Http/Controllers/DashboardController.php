@@ -19,9 +19,25 @@ class DashboardController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Idea added successfully!');
     }
+    public function edit(Idea $idea){
+        $editing = true;
+        return view('idea.show',compact('idea','editing'));
+    }
+    public function update(Idea $idea,Request $request){
+        $data = $request->validate([
+            'content'=>'required|string|min:3|max:240',
+        ]);
+        $idea->update($data);
+
+        return redirect()->route('idea.show',$idea->id)->with('success', 'Idea update successfully!');
+    }
     public function delete(Idea $idea){
         $idea->delete();
 
         return redirect()->route('dashboard')->with('success', 'Idea delete successfully!');
+    }
+    public function show(Idea $idea){
+
+        return view('idea.show',compact('idea'));
     }
 }

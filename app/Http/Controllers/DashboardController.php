@@ -9,7 +9,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard', ['ideas' => Idea::orderBy('created_at', 'desc')->paginate(5)]);
+        $ideas = Idea::query()->orderBy('created_at','desc');
+        if(request()->has('search')){
+            $ideas->where('content', 'like', '%' . request()->get('search') . '%');
+        }
+
+        return view('dashboard',['ideas'=>$ideas->paginate(5)]);
     }
     public function store(Request $request){
         $data = $request->validate([
@@ -40,4 +45,5 @@ class DashboardController extends Controller
 
         return view('idea.show',compact('idea'));
     }
+
 }

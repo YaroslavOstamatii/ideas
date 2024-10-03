@@ -1,3 +1,4 @@
+@auth()
 <div>
     <form action="{{route('idea.comment.store',$idea->id)}}" method="post">
         @csrf
@@ -26,6 +27,9 @@
                 </p>
         </div>
     </div>
-
     @endforeach
 </div>
+@endauth
+@guest()
+    <h4> Login to share yours ideas </h4>
+@endguest

@@ -5,7 +5,7 @@
                 <img style="width:50px" class="me-2 avatar-sm rounded-circle"
                      src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Mario" alt="Mario Avatar">
                 <div>
-                    <h5 class="card-title mb-0"><a href="#"> Mario
+                    <h5 class="card-title mb-0"><a href="#"> {{$idea->user->name}}
                         </a></h5>
                 </div>
 

@@ -10,7 +10,8 @@ class CommentController extends Controller
 {
     public function store(Idea $idea){
         $idea->comments()->create([
-            'content' => request('content')
+            'content' => request('content'),
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('idea.show', $idea->id)->with('success','comment added successfuly');

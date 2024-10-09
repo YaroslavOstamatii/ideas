@@ -11,7 +11,7 @@
 
             </div>
             <div>
-                <form action="{{route('idea.delete',$idea->id)}}" method="post">
+                <form action="{{route('idea.destroy',$idea->id)}}" method="post">
                     @csrf
                     @method('delete')
                     <a href="{{route('idea.show',['idea'=>$idea])}}">Show</a>

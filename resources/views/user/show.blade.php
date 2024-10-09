@@ -6,9 +6,10 @@
         </div>
         <div class="col-6">
             @include('include.success_message')
-            @include('include.submit_idea')
+            <div>
+             @include('include.user-card')
+            </div>
             <hr>
-
             @forelse($ideas as $idea)
                 <div class="mt-3">
                     @include('include.idea_card')

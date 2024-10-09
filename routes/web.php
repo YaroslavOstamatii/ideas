@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,23 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DashboardController::class,'index'])->name('dashboard');
-Route::get('/idea/{idea}', [DashboardController::class,'show'])->name('idea.show');
-Route::post('/idea', [DashboardController::class,'store'])->name('idea.store');
-Route::get('/idea/{idea}/edit', [DashboardController::class,'edit'])->name('idea.edit')->middleware('auth');
-Route::patch('/idea/{idea}', [DashboardController::class,'update'])->name('idea.update')->middleware('auth');
-Route::delete('/idea/{idea}', [DashboardController::class,'delete'])->name('idea.delete')->middleware('auth');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::post('/idea/{idea}/comments', [CommentController::class,'store'])->name('idea.comment.store')->middleware('auth');
+Route::resource('idea',DashboardController::class)->only('show');
+Route::resource('idea',DashboardController::class)->except('index','create','show')->middleware('auth');
+Route::resource('idea.comment',CommentController::class)->only('store')->middleware('auth');
+Route::resource('user',UserController::class)->only('show','edit','update')->middleware('auth');
 
-Route::get('/terms', function (){ return view('terms');})->name('terms');
+Route::get('/terms', fn() => view('terms'))->name('terms');
 
-Route::get('/register', [AuthController::class,'register'])->name('register');
-Route::post('/register', [AuthController::class,'store']);
 
-Route::get('/login', [AuthController::class,'login'])->name('login');
-Route::post('/login', [AuthController::class,'authenticate']);
-
-Route::post('/logout', [AuthController::class,'logout'])->name('logout');
 
 

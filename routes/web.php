@@ -23,6 +23,7 @@ Route::resource('idea',DashboardController::class)->only('show');
 Route::resource('idea',DashboardController::class)->except('index','create','show')->middleware('auth');
 Route::resource('idea.comment',CommentController::class)->only('store')->middleware('auth');
 Route::resource('user',UserController::class)->only('show','edit','update')->middleware('auth');
+Route::get('profile',[UserController::class,'profile'])->middleware('auth')->name('profile');
 
 Route::get('/terms', fn() => view('terms'))->name('terms');
 

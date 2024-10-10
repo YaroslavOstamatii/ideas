@@ -3,15 +3,12 @@
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <img style="width:150px" class="me-3 avatar-sm rounded-circle"
-                     src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Mario" alt="Mario Avatar">
+                     src="{{$user->getImageUrl()}}" alt="Mario Avatar">
                 <div>
-                    @if($editing ?? false)
-                        <input value="{{ $user->name }}" type="text" class="form-control">
-                    @else
+
                         <h3 class="card-title mb-0"><a href="#"> {{ $user->name }}
                             </a></h3>
                         <span class="fs-6 text-muted">{{ $user->email }}</span>
-                    @endif
                 </div>
             </div>
             <div>
@@ -24,19 +21,13 @@
                 @endauth
             </div>
         </div>
+
         <div class="px-2 mt-4">
             <h5 class="fs-5"> Bio: </h5>
-            @if($editing ?? false)
-                <textarea class="form-control" id="bio" rows="3" name="bio"></textarea>
-                @error('bio')
-                <span class="d-block text-danger mt-2">{{$message}}</span>
-                @enderror
-                <button class="btn btn-dark btn-sm my-2">Save</button>
-            @else
+
             <p class="fs-6 fw-light">
-              Bio of user
+                {{ $user->bio }}
             </p>
-            @endif
             <div class="d-flex justify-content-start">
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-user me-1">
                                     </span> 0 </a>

@@ -18,7 +18,7 @@
                 @endguest
                 @auth()
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('user.show',auth()->id())}}">{{auth()->user()->name}}</a>
+                        <a class="nav-link" href="{{ route('profile') }}">{{auth()->user()->name}}</a>
                     </li>
 
                     <form action="{{route('logout')}}" method="post">

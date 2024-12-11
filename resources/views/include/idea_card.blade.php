@@ -3,7 +3,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center justify-content-between">
                 <img style="width:50px" class="me-2 avatar-sm rounded-circle"
-                     src="{{$user->getImageUrl()}}" alt="Mario Avatar">
+                     src="{{$idea->user->getImageUrl()}}" alt="{{$idea->user->name}}">
                 <div>
                     <h5 class="card-title mb-0"><a href="{{ route('user.show',$idea->user->id) }}"> {{$idea->user->name}}
                         </a></h5>

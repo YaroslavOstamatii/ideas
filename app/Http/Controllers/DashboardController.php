@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IdeaStoreRequest;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 
@@ -17,13 +18,11 @@ class DashboardController extends Controller
         return view('dashboard', ['ideas' => $ideas->paginate(5)]);
     }
 
-    public function store(Request $request)
+    public function store(IdeaStoreRequest $request)
     {
-        $data = $request->validate([
-            'content' => 'required|string|min:3|max:240',
-        ]);
-        $data['user_id'] = auth()->id();
-        Idea::create($data);
+        $data = $request->validated();
+        $idea = new Idea($data);
+        auth()->user()->ideas()->save($idea);
 
         return redirect()->route('dashboard')->with('success', 'Idea added successfully!');
     }
@@ -51,10 +50,10 @@ class DashboardController extends Controller
         return redirect()->route('idea.show', $idea->id)->with('success', 'Idea update successfully!');
     }
 
-    public function delete(Idea $idea)
+    public function destroy(Idea $idea)
     {
         if (auth()->id() !== $idea->user_id) {
-            abort(404);
+            return redirect()->back()->with('success', 'You cant delete this ideas');
         }
         $idea->delete();
 

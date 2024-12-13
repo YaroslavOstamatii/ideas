@@ -18,7 +18,6 @@ class CommentController extends Controller
         ]);
 
         return redirect()->route('idea.show', $idea->id)
-            ->with('success','comment added successfuly')
-            ->withInput();
+            ->with('success','comment added successfuly');
     }
 }

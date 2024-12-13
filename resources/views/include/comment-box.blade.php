@@ -3,7 +3,7 @@
     <form action="{{route('idea.comment.store',$idea->id)}}" method="post">
         @csrf
         <div class="mb-3">
-            <textarea name="comment" class="fs-6 form-control" rows="1">{{ old('comment') }}</textarea>
+            <textarea name="comment" class="fs-6 form-control" rows="1"></textarea>
         </div>
         <div>
             <button type="submit" class="btn btn-primary btn-sm"> Post Comment</button>
@@ -20,7 +20,6 @@
                 </h6>
                 <small class="fs-6 fw-light text-muted"> {{$comment->created_at->format('d M Y, H:i')}}</small>
             </div>
-
                 <p class="fs-6 mt-3 fw-light">
                     {{$comment->comment}}
                 </p>

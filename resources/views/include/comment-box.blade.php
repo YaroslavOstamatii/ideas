@@ -13,7 +13,7 @@
         <hr>
     <div class="d-flex align-items-start">
         <img style="width:35px" class="me-2 avatar-sm rounded-circle"
-             src="{{$comment->user->getImageUrl()}}" alt="Mario Avatar">
+             src="{{$comment->user->getImageUrl()}}" alt="{{$comment->user->name}}">
         <div class="w-100">
             <div class="d-flex justify-content-between">
                 <h6 class="">{{$comment->user->name}}

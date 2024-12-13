@@ -42,11 +42,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($data)) {
             request()->session()->regenerate();
-
-            return redirect()->route('dashboard')->with('success','Logged in successfully');
+            return redirect()->intended('/')->with('success','Logged in successfully');
         }
 
-        return redirect()->route('login')->withErrors(['email' => 'The provided credentials do not match our records.',]);
+        return redirect()->route('login')->withErrors(['email' => 'The provided credentials do not match our records.']);
     }
     public function logout()
     {

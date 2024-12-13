@@ -11,7 +11,10 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $guarded = false;
+    protected $fillable = [
+        'comment',
+        'user_id',
+    ];
 
     public function idea(): BelongsTo
     {

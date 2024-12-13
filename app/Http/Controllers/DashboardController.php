@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $idea = new Idea($data);
         auth()->user()->ideas()->save($idea);
 
-        return redirect()->route('dashboard')->with('success', 'Idea added successfully!');
+        return redirect()->route('dashboard')->with('success', 'Idea added successfully!')->withInput();
     }
 
     public function edit(Idea $idea): View

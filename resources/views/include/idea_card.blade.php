@@ -10,15 +10,25 @@
                 </div>
 
             </div>
-            <div>
-                <form action="{{route('idea.destroy',$idea->id)}}" method="post">
-                    @csrf
-                    @method('delete')
-                    <a href="{{route('idea.show',['idea'=>$idea])}}">Show</a>
-                    <a class="mx-2"  href="{{route('idea.edit',['idea'=>$idea])}}">Edit</a>
-                    <button class=" ms-1 btn btn-danger btn-sm"> X</button>
-                </form>
+            <div class="d-flex align-items-center justify-content-between">
+            @if (!Route::is('idea.show'))
+                <a href="{{route('idea.show',['idea'=>$idea])}}">Show</a>
+            @endif
+            @auth
+                @if(auth()->id() === $idea->user_id)
+
+                        <form action="{{route('idea.destroy',$idea->id)}}" method="post">
+                            @csrf
+                            @method('delete')
+
+                            <a class="mx-2"  href="{{route('idea.edit',['idea'=>$idea])}}">Edit</a>
+                            <button class=" ms-1 btn btn-danger btn-sm"> X</button>
+                        </form>
+
+                @endif
+            @endauth
             </div>
+
         </div>
     </div>
     <div class="card-body">
@@ -38,7 +48,7 @@
             </form>
         @else
         <p class="fs-6 fw-light text-muted">
-            {{$idea->content}}
+            {{$idea->idea_content}}
         </p>
         @endif
         <div class="d-flex justify-content-between">

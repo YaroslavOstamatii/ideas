@@ -4,7 +4,7 @@
     <div class="col-12 col-sm-8 col-md-6">
         <form class="form mt-5" action="{{route('register')}}" method="post">
             @csrf
-            <h3 class="text-center text-dark">Register</h3>
+            <h3 class="text-center text-dark">{{__('auth.register')}}</h3>
             <div class="form-group">
                 <label for="name" class="text-dark">Name</label><br>
                 <input type="text" name="name" id="name" class="form-control">

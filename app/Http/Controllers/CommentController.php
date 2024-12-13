@@ -9,11 +9,16 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     public function store(Idea $idea){
+        request()->validate([
+            'comment' => 'required|string|min:3|max:240',
+        ]);
         $idea->comments()->create([
-            'content' => request('content'),
+            'comment' => request('comment'),
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('idea.show', $idea->id)->with('success','comment added successfuly');
+        return redirect()->route('idea.show', $idea->id)
+            ->with('success','comment added successfuly')
+            ->withInput();
     }
 }

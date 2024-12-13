@@ -1,9 +1,9 @@
-@auth()
+
 <div>
     <form action="{{route('idea.comment.store',$idea->id)}}" method="post">
         @csrf
         <div class="mb-3">
-            <textarea name="content" class="fs-6 form-control" rows="1"></textarea>
+            <textarea name="comment" class="fs-6 form-control" rows="1">{{ old('comment') }}</textarea>
         </div>
         <div>
             <button type="submit" class="btn btn-primary btn-sm"> Post Comment</button>
@@ -22,13 +22,9 @@
             </div>
 
                 <p class="fs-6 mt-3 fw-light">
-                    {{$comment->content}}
+                    {{$comment->comment}}
                 </p>
         </div>
     </div>
     @endforeach
 </div>
-@endauth
-@guest()
-    <h4> Login to share yours ideas </h4>
-@endguest

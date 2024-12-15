@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $ideas = Idea::query()->orderBy('created_at', 'desc');
         if (request()->has('search')) {
-            $ideas->where('content', 'like', '%' . request('search') . '%');
+            $ideas->where('idea_content', 'like', '%' . request('search') . '%');
         }
 
         return view('dashboard', ['ideas' => $ideas->paginate(5)]);

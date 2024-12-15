@@ -10,7 +10,7 @@
     <form action="{{route('idea.store')}}" method="post">
         @csrf
         <div class="mb-3">
-            <textarea class="form-control" id="idea" rows="3" name="idea_content">{{ old('idea_content') }}</textarea>
+            <textarea class="form-control" id="idea" rows="3" name="idea_content"></textarea>
             @error('idea_content')
             <span class="d-block text-danger mt-2">{{$message}}</span>
             @enderror

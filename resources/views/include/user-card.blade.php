@@ -2,23 +2,20 @@
     <div class="px-3 pt-4 pb-2">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
-                <img style="width:150px" class="me-3 avatar-sm rounded-circle"
+                <img style="width:150px; height: 150px" class="me-3 avatar-sm rounded-circle"
                      src="{{$user->getImageUrl()}}" alt="Mario Avatar">
                 <div>
-
-                        <h3 class="card-title mb-0"><a href="#"> {{ $user->name }}
-                            </a></h3>
-                        <span class="fs-6 text-muted">{{ $user->email }}</span>
+                    <h3 class="card-title mb-0"><a href="#"> {{ $user->name }}
+                        </a></h3>
+                    <span class="fs-6 text-muted">{{ $user->email }}</span>
                 </div>
             </div>
             <div>
-                @auth()
-                    @if(auth()->id() === $user->id)
-                        <div class="mt-3">
-                            <a href="{{route('user.edit', $user->id)}}"> Edit </a>
-                        </div>
-                    @endif
-                @endauth
+                @if(auth()->id() === $user->id)
+                    <div class="mt-3">
+                        <a href="{{route('user.edit', $user->id)}}"> Edit </a>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -36,14 +33,11 @@
                 <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-comment me-1">
                                     </span> {{ $user->comments()->count() }} </a>
             </div>
-            @auth()
-                @if(auth()->id() !== $user->id)
-                    <div class="mt-3">
-                        <button class="btn btn-primary btn-sm"> Follow</button>
-                    </div>
-                @endif
-            @endauth
-
+            @if(auth()->id() !== $user->id)
+                <div class="mt-3">
+                    <button class="btn btn-primary btn-sm"> Follow</button>
+                </div>
+            @endif
         </div>
     </div>
 </div>

@@ -27,7 +27,7 @@
             </p>
             <div class="d-flex justify-content-start">
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-user me-1">
-                                    </span> 0 </a>
+                                    </span> {{ $user->followers()->count() }} </a>
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-brain me-1">
                                     </span> {{ $user->ideas()->count() }} </a>
                 <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-comment me-1">
@@ -35,7 +35,17 @@
             </div>
             @if(auth()->id() !== $user->id)
                 <div class="mt-3">
-                    <button class="btn btn-primary btn-sm"> Follow</button>
+                    @if(Auth::user()->follows($user))
+                        <form method="post" action="{{route('users.unfollow',$user->id)}}">
+                            @csrf
+                            <button class="btn btn-danger btn-sm" type="submit"> Unfollow</button>
+                        </form>
+                    @else
+                        <form method="post" action="{{route('users.follow',$user->id)}}">
+                            @csrf
+                            <button class="btn btn-primary btn-sm" type="submit"> Follow</button>
+                        </form>
+                    @endif
                 </div>
             @endif
         </div>

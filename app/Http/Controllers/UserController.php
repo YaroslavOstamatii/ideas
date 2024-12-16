@@ -24,7 +24,7 @@ class UserController extends Controller
     {
         //$editing = true;
         $ideas = $user->ideas()->paginate(5);
-        return view('user.edit', compact('user',  'ideas'));
+        return view('user.edit', compact('user', 'ideas'));
     }
 
     /**
@@ -46,9 +46,7 @@ class UserController extends Controller
         if (request('image')) {
             $imagePath = request('image')->store('profile', 'public');
             $data['image'] = $imagePath;
-            if ($user->image) {
-                Storage::disk('public')->delete($user->image);
-            }
+            Storage::disk('public')->delete($user->image ?? '');
         }
 
         $user->update($data);

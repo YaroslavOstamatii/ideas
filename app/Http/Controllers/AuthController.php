@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendWelcomeEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,11 +22,13 @@ class AuthController extends Controller
             'email'=>'required|email|unique:users,email',
             'password'=>'required|min:8|confirmed',
         ]);
-        User::create([
+        $user = User::create([
             'name'=>$data['name'],
             'email'=>$data['email'],
             'password'=>Hash::make($data['password']),
         ]);
+        SendWelcomeEmail::dispatch($user);
+
         return redirect()->route('dashboard')->with('success', 'Account created successfully!');
     }
     public function login()

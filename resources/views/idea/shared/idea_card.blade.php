@@ -5,28 +5,28 @@
                 <img style="width:50px; height: 50px" class="me-2 avatar-sm rounded-circle"
                      src="{{$idea->user->getImageUrl()}}" alt="{{$idea->user->name}}">
                 <div>
-                    <h5 class="card-title mb-0"><a href="{{ route('user.show',$idea->user->id) }}"> {{$idea->user->name}}
+                    <h5 class="card-title mb-0"><a
+                            href="{{ route('user.show',$idea->user->id) }}"> {{$idea->user->name}}
                         </a></h5>
                 </div>
 
             </div>
             <div class="d-flex align-items-center justify-content-between">
-            @if (!Route::is('idea.show'))
-                <a href="{{route('idea.show',['idea'=>$idea])}}">Show</a>
-            @endif
-            @auth
-                @if(auth()->id() === $idea->user_id)
+                @if (!Route::is('idea.show'))
+                    <a href="{{route('idea.show',['idea'=>$idea])}}">Show</a>
+                @endif
+                @auth
+                    @if(auth()->id() === $idea->user_id)
 
                         <form action="{{route('idea.destroy',$idea->id)}}" method="post">
                             @csrf
                             @method('delete')
 
-                            <a class="mx-2"  href="{{route('idea.edit',['idea'=>$idea])}}">Edit</a>
+                            <a class="mx-2" href="{{route('idea.edit',['idea'=>$idea])}}">Edit</a>
                             <button class=" ms-1 btn btn-danger btn-sm"> X</button>
                         </form>
-
-                @endif
-            @endauth
+                    @endif
+                @endauth
             </div>
 
         </div>
@@ -47,20 +47,20 @@
                 </div>
             </form>
         @else
-        <p class="fs-6 fw-light text-muted">
-            {{$idea->idea_content}}
-        </p>
+            <p class="fs-6 fw-light text-muted">
+                {{$idea->idea_content}}
+            </p>
         @endif
         <div class="d-flex justify-content-between">
             <div>
-                <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-heart me-1">
-                                        </span> {{$idea->likes}} </a>
+                @include('idea.shared.like-button')
+
             </div>
             <div>
                 <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span>
                     {{$idea->created_at->format('d M Y, H:i')}}</span>
             </div>
         </div>
-       @include('include.comment-box')
+               @include('include.comment-box')
     </div>
 </div>

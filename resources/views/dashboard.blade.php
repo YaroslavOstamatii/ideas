@@ -6,12 +6,12 @@
         </div>
         <div class="col-6">
             @include('include.success_message')
-            @include('include.submit_idea')
+            @include('idea.shared.submit_idea')
             <hr>
 
             @forelse($ideas as $idea)
                 <div class="mt-3">
-                    @include('include.idea_card')
+                    @include('idea.shared.idea_card')
                 </div>
             @empty
                 <p class="text-center my-3">Nothing found</p>

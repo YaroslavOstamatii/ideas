@@ -72,4 +72,12 @@ class User extends Authenticatable
         }
         return "https://api.dicebear.com/6.x/fun-emoji/svg?seed={$this->name}";
     }
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany(Idea::class,'idea_like')->withTimestamps();
+    }
+    public function isLike(Idea $idea)
+    {
+        return $this->likes()->where('idea_id',$idea->id)->exists();
+    }
 }

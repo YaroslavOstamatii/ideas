@@ -16,8 +16,7 @@
                     <a href="{{route('idea.show',['idea'=>$idea])}}">Show</a>
                 @endif
                 @auth
-                    @if(auth()->id() === $idea->user_id)
-
+                    @can('idea.edit',$idea)
                         <form action="{{route('idea.destroy',$idea->id)}}" method="post">
                             @csrf
                             @method('delete')
@@ -25,7 +24,7 @@
                             <a class="mx-2" href="{{route('idea.edit',['idea'=>$idea])}}">Edit</a>
                             <button class=" ms-1 btn btn-danger btn-sm"> X</button>
                         </form>
-                    @endif
+                    @endcan
                 @endauth
             </div>
 
@@ -37,7 +36,8 @@
                 @method('patch')
                 @csrf
                 <div class="mb-3">
-                    <textarea class="form-control" id="idea" rows="3" name="content">{{$idea->content}}</textarea>
+                    <textarea class="form-control" id="idea" rows="3"
+                              name="content">{{ old('content', $idea->idea_content) }}</textarea>
                     @error('content')
                     <span class="d-block text-danger mt-2">{{$message}}</span>
                     @enderror
@@ -61,6 +61,6 @@
                     {{$idea->created_at->format('d M Y, H:i')}}</span>
             </div>
         </div>
-               @include('include.comment-box')
+        @include('include.comment-box')
     </div>
 </div>

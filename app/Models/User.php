@@ -10,6 +10,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * App\Models\User
+ *
+ * @property int $id
+ * @property string name
+ * @property string email
+ * @property boolean is_admin
+ * @property string password
+ * @property string image
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ *
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -63,11 +77,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class,'follower_user','user_id','follower_id')->withTimestamps();
     }
-    public function follows(User $user)
+    public function follows(User $user): bool
     {
         return $this->followings()->where('user_id',$user->id)->exists();
     }
-    public function getImageUrl()
+    public function getImageUrl(): string
     {
         if ($this->image){
             return url('storage/'. $this->image);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IdeaStoreRequest;
 use App\Models\Idea;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -33,19 +34,18 @@ class DashboardController extends Controller
 
     public function edit(Idea $idea): View
     {
-        if (auth()->id() !== $idea->user_id) {
-            abort(404);
-        }
+        $this->authorize('idea.edit',$idea);
         $editing = true;
 
         return view('idea.show', compact('idea', 'editing'));
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function update(Idea $idea): RedirectResponse
     {
-        if (auth()->id() !== $idea->user_id) {
-            abort(404);
-        }
+        $this->authorize('idea.edit',$idea);
         request()->validate([
             'content' => 'required|string|min:3|max:240',
         ]);
@@ -57,9 +57,7 @@ class DashboardController extends Controller
 
     public function destroy(Idea $idea): RedirectResponse
     {
-        if (auth()->id() !== $idea->user_id) {
-            return redirect()->back()->with('success', 'You cant delete this ideas');
-        }
+        $this->authorize('idea.edit',$idea);
         $idea->delete();
 
         return redirect()->route('dashboard')->with('success', 'Idea delete successfully!');

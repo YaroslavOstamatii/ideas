@@ -16,7 +16,7 @@
                     <a href="{{route('idea.show',['idea'=>$idea])}}">Show</a>
                 @endif
                 @auth
-                    @can('idea.edit',$idea)
+                    @can('update',$idea)
                         <form action="{{route('idea.destroy',$idea->id)}}" method="post">
                             @csrf
                             @method('delete')

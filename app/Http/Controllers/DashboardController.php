@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
     public function edit(Idea $idea): View
     {
-        $this->authorize('idea.edit',$idea);
+        $this->authorize('update',$idea);
         $editing = true;
 
         return view('idea.show', compact('idea', 'editing'));
@@ -45,11 +45,11 @@ class DashboardController extends Controller
      */
     public function update(Idea $idea): RedirectResponse
     {
-        $this->authorize('idea.edit',$idea);
+        $this->authorize('update',$idea);
         request()->validate([
             'content' => 'required|string|min:3|max:240',
         ]);
-        $idea->content = request('content');
+        $idea->idea_content = request('content');
         $idea->save();
 
         return redirect()->route('idea.show', $idea->id)->with('success', 'Idea update successfully!');
@@ -57,7 +57,7 @@ class DashboardController extends Controller
 
     public function destroy(Idea $idea): RedirectResponse
     {
-        $this->authorize('idea.edit',$idea);
+        $this->authorize('update',$idea);
         $idea->delete();
 
         return redirect()->route('dashboard')->with('success', 'Idea delete successfully!');

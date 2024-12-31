@@ -23,6 +23,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //$editing = true;
+        $this->authorize('update',$user);
+
         $ideas = $user->ideas()->paginate(5);
         return view('user.edit', compact('user', 'ideas'));
     }
@@ -37,6 +39,7 @@ class UserController extends Controller
 
     public function update(User $user)
     {
+        $this->authorize('update',$user);
         $data = request()->validate([
             'image' => 'image',
             'name' => 'required|min:3|max:40',

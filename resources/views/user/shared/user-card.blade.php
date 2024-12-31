@@ -3,7 +3,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <img style="width:150px; height: 150px" class="me-3 avatar-sm rounded-circle"
-                     src="{{$user->getImageUrl()}}" alt="Mario Avatar">
+                     src="{{$user->getImageUrl()}}" alt="{{ $user->name }}">
                 <div>
                     <h3 class="card-title mb-0"><a href="#"> {{ $user->name }}
                         </a></h3>
@@ -11,11 +11,11 @@
                 </div>
             </div>
             <div>
-                @if(auth()->id() === $user->id)
+                @can('update',$user)
                     <div class="mt-3">
                         <a href="{{route('user.edit', $user->id)}}"> Edit </a>
                     </div>
-                @endif
+                @endcan
             </div>
         </div>
 

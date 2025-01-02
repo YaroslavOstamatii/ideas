@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\IdeaStoreRequest;
+use App\Http\Requests\Idea\IdeaStoreRequest;
+use App\Http\Requests\Idea\IdeaUpdateRequest;
 use App\Models\Idea;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -43,13 +42,11 @@ class DashboardController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function update(Idea $idea): RedirectResponse
+    public function update(Idea $idea,IdeaUpdateRequest $request): RedirectResponse
     {
         $this->authorize('update',$idea);
-        request()->validate([
-            'content' => 'required|string|min:3|max:240',
-        ]);
-        $idea->idea_content = request('content');
+        $data = $request->validated();
+        $idea->idea_content = $data['content'];
         $idea->save();
 
         return redirect()->route('idea.show', $idea->id)->with('success', 'Idea update successfully!');

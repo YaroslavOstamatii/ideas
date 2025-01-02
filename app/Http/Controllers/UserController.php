@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -37,17 +39,16 @@ class UserController extends Controller
         return $this->show(auth()->user());
     }
 
-    public function update(User $user)
+    /**
+     * @throws AuthorizationException
+     */
+    public function update(UpdateUserRequest $request, User $user)
     {
         $this->authorize('update',$user);
-        $data = request()->validate([
-            'image' => 'image',
-            'name' => 'required|min:3|max:40',
-            'bio' => 'sometimes|nullable|min:3|max:255',
-        ]);
+        $data = $request->validated();
 
-        if (request('image')) {
-            $imagePath = request('image')->store('profile', 'public');
+        if ($request->has('image')) {
+            $imagePath = $request->file('image')->store('profile', 'public');
             $data['image'] = $imagePath;
             Storage::disk('public')->delete($user->image ?? '');
         }

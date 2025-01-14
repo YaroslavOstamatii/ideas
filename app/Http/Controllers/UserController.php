@@ -16,6 +16,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $ideas = $user->ideas()->paginate(5);
+
         return view('user.show', compact('user', 'ideas'));
     }
 

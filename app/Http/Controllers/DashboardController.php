@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Idea\IdeaStoreRequest;
 use App\Http\Requests\Idea\IdeaUpdateRequest;
 use App\Models\Idea;
+use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;

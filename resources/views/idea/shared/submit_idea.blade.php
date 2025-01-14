@@ -2,10 +2,10 @@
 <div class="row">
 
     @auth()
-        <h4> Share yours ideas </h4>
+        <h4> {{__('ideas.share_yours_ideas')}} </h4>
     @endauth
     @guest()
-            <h4> Login to share yours ideas </h4>
+            <h4> {{__('ideas.login_to_share_yours_ideas')}} </h4>
     @endguest
     <form action="{{route('idea.store')}}" method="post">
         @csrf

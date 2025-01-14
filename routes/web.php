@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('lang/{lang}',function ($lang){
+    session()->put('locale',$lang);
+    return redirect()->back();
+})->name('lang');
+
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('idea',DashboardController::class)->only('show');

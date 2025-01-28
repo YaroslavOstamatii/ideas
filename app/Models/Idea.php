@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +40,7 @@ use Illuminate\Support\Str;
 class Idea extends Model
 {
     use HasFactory;
+
     protected $withCount = ['likes'];
 
     protected $fillable =
@@ -65,6 +67,11 @@ class Idea extends Model
 //    }
     public function likes(): BelongsToMany
     {
-       return $this->belongsToMany(User::class,'idea_like')->withTimestamps();
+        return $this->belongsToMany(User::class, 'idea_like')->withTimestamps();
+    }
+
+    public function scopeSearch(Builder $query, ?string $search = null): void
+    {
+        $query->where('idea_content', 'like', '%' . $search . '%');
     }
 }

@@ -15,13 +15,14 @@ class DashboardController extends Controller
     public function index(): View
     {
         $ideas = Idea::query()
-            ->with('user:id,name,image','comments.user')
-            ->orderBy('created_at', 'desc');
-        if (request()->has('search')) {
-            $ideas->where('idea_content', 'like', '%' . request('search') . '%');
-        }
+            ->with('user:id,name,image', 'comments.user')
+            ->when(request()->has('search'), function ($query) {
+                $query->search(request('search'));
+            })
+            ->latest()
+            ->paginate(5);
 
-        return view('dashboard', ['ideas' => $ideas->paginate(5)]);
+        return view('dashboard', ['ideas' => $ideas]);
     }
 
     public function store(IdeaStoreRequest $request): RedirectResponse
@@ -35,7 +36,7 @@ class DashboardController extends Controller
 
     public function edit(Idea $idea): View
     {
-        $this->authorize('update',$idea);
+        $this->authorize('update', $idea);
         $editing = true;
 
         return view('idea.show', compact('idea', 'editing'));
@@ -44,9 +45,9 @@ class DashboardController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function update(Idea $idea,IdeaUpdateRequest $request): RedirectResponse
+    public function update(Idea $idea, IdeaUpdateRequest $request): RedirectResponse
     {
-        $this->authorize('update',$idea);
+        $this->authorize('update', $idea);
         $data = $request->validated();
         $idea->idea_content = $data['content'];
         $idea->save();
@@ -56,11 +57,12 @@ class DashboardController extends Controller
 
     public function destroy(Idea $idea): RedirectResponse
     {
-        $this->authorize('update',$idea);
+        $this->authorize('update', $idea);
         $idea->delete();
 
         return redirect()->route('dashboard')->with('success', 'Idea delete successfully!');
     }
+
     public function show(Idea $idea): View
     {
         $idea->load('comments');

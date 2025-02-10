@@ -21,8 +21,10 @@
             @foreach($ideas as $idea)
                     <tr>
                         <th scope="row">{{$idea->id}}</th>
-                        <td>{{Str::limit($idea->content, 20, '...')}}</td>
-                        <td>{{$idea->user->name .' | '. $idea->user->email}}</td>
+                        <td>{{Str::limit($idea->idea_content, 20, '...')}}</td>
+                        <td>
+                            <a href="{{route('user.show',$idea->user->id)}}">{{$idea->user->name}}</a>
+                        </td>
                         <td>{{$idea->created_at->toDateString()}}</td>
                         <td>
                             <a type="submit" href="{{route('idea.show',$idea->id)}}">Show</a>
